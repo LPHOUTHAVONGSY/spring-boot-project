@@ -56,8 +56,8 @@ class CustomerServiceTest {
         // Given a customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -90,7 +90,7 @@ class CustomerServiceTest {
         // When checking if email exists, return false (email does not exist in the database).
         when(customerDao.existsCustomerWithEmail(email)).thenReturn(false);
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19
+                "Alex", email, 19, Gender.MALE
         );
 
         // When calling addCustomer with the request.
@@ -117,7 +117,7 @@ class CustomerServiceTest {
         when(customerDao.existsCustomerWithEmail(email)).thenReturn(true);
         
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19
+                "Alex", email, 19, Gender.MALE
         );
 
         // Then verify that calling addCustomer with the request throws a DuplicateResourceException.
@@ -167,8 +167,8 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -200,8 +200,8 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -230,8 +230,8 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -263,8 +263,8 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -293,8 +293,8 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -321,8 +321,8 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 

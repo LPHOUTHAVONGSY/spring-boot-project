@@ -27,6 +27,7 @@ class CustomerRowMapperTest {
         when(resultSet.getInt("age")).thenReturn(19);
         when(resultSet.getString("name")).thenReturn("John");
         when(resultSet.getString("email")).thenReturn("john@gmail.com");
+        when(resultSet.getString("gender")).thenReturn("FEMALE");
 
         // When
         // Call the mapRow method of the CustomerRowMapper with the mock ResultSet and row number 1
@@ -36,8 +37,8 @@ class CustomerRowMapperTest {
         // Then
         // Create the expected Customer object with the data we defined in the mock ResultSet
         Customer expected = new Customer(
-                1L, "John", "john@gmail.com", 19
-        );
+                1L, "John", "john@gmail.com", 19,
+                Gender.FEMALE);
 
         // Assert that the actual Customer object obtained from the mapRow method
         // is equal to the expected Customer object we created with the same data

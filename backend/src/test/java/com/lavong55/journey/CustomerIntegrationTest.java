@@ -5,6 +5,7 @@ import com.github.javafaker.Name; // Importing the Name class from Faker.
 import com.lavong55.customer.Customer; // Importing the Customer class from the 'customer' package.
 import com.lavong55.customer.CustomerRegistrationRequest; // Importing the CustomerRegistrationRequest class from the 'customer' package.
 import com.lavong55.customer.CustomerUpdateRequest; // Importing the CustomerUpdateRequest class from the 'customer' package.
+import com.lavong55.customer.Gender;
 import org.junit.jupiter.api.Test; // Importing JUnit Test class.
 import org.springframework.beans.factory.annotation.Autowired; // Importing the Autowired annotation from Spring.
 import org.springframework.boot.test.context.SpringBootTest; // Importing the SpringBootTest annotation from Spring Boot.
@@ -45,10 +46,10 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName(); // Generate a random full name.
         String email = fakerName.lastName() + "=" + UUID.randomUUID() + "@gmail.com"; // Generate a random email.
         int age = RANDOM.nextInt(1, 100); // Generate a random age between 1 and 100.
-
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
         // Create a new CustomerRegistrationRequest object with the random data.
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         // Send a POST request to register the customer and expect an HTTP 200 OK response.
@@ -75,8 +76,8 @@ public class CustomerIntegrationTest {
 
         // Validate that the newly registered customer is present in the list of all customers.
         Customer expectedCustomer = new Customer( // Create a Customer object with the expected data.
-                name, email, age
-        );
+                name, email, age,
+                gender);
         assertThat(allCustomers).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id") // Use AssertJ to compare the list of customers ignoring the 'id' field.
                 .contains(expectedCustomer); // Check if the expected customer is present in the list.
 
@@ -110,10 +111,10 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName(); // Generate a random full name.
         String email = fakerName.lastName() + "=" + UUID.randomUUID() + "@gmail.com"; // Generate a random email.
         int age = RANDOM.nextInt(1, 100); // Generate a random age between 1 and 100.
-
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
         // Create a new CustomerRegistrationRequest object with the random data.
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         // Send a POST request to register the customer and expect an HTTP 200 OK response.
@@ -172,10 +173,10 @@ public class CustomerIntegrationTest {
         String name = fakerName.fullName(); // Generate a random full name.
         String email = fakerName.lastName() + "-" + UUID.randomUUID() + "@gmail.com"; // Generate a random email.
         int age = RANDOM.nextInt(1, 100); // Generate a random age between 1 and 100.
-
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
         // Create a new CustomerRegistrationRequest object with the random data.
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         // Send a POST request to register the customer and expect an HTTP 200 OK response.
@@ -238,7 +239,7 @@ public class CustomerIntegrationTest {
 
         // Create the expected updated Customer object with the new name and the existing email and age.
         Customer expected = new Customer(
-                id, newName, email, age
+                id, newName, email, age, gender
         );
 
         // Assert that the updated customer matches the expected updated customer data.
