@@ -88,8 +88,8 @@ const SidebarContent = ({onClose, ...rest}) => {
                 <Image
                     borderRadius='full'
                     boxSize='75px'
-                    src='https://cdn-icons-png.flaticon.com/512/143/143178.png?w=826&t=st=1691368472~exp=1691369072~hmac=19a031af9013e645efcec989947a57a1f82c28be8dd539db4b5dc2b6a7d44d93'
-                    alt='Logo'
+                    src='https://user-images.githubusercontent.com/40702606/210880158-e7d698c2-b19a-4057-b415-09f48a746753.png'
+                    alt='Amigoscode'
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
@@ -104,32 +104,32 @@ const SidebarContent = ({onClose, ...rest}) => {
 
 const NavItem = ({icon, children, ...rest}) => {
     return (
-        <Link href="frontend/react/src/components/shared#" style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
-            <Flex
-                align="center"
-                p="4"
-                mx="4"
-                borderRadius="lg"
-                role="group"
-                cursor="pointer"
-                _hover={{
-                    bg: 'cyan.400',
-                    color: 'white',
-                }}
-                {...rest}>
-                {icon && (
-                    <Icon
-                        mr="4"
-                        fontSize="16"
-                        _groupHover={{
-                            color: 'white',
-                        }}
-                        as={icon}
-                    />
-                )}
-                {children}
-            </Flex>
-        </Link>
+        // <Link href="frontend/react/src/components/shared#" style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
+        <Flex
+            align="center"
+            p="4"
+            mx="4"
+            borderRadius="lg"
+            role="group"
+            cursor="pointer"
+            _hover={{
+                bg: 'blue.400',
+                color: 'white',
+            }}
+            {...rest}>
+            {icon && (
+                <Icon
+                    mr="4"
+                    fontSize="16"
+                    _groupHover={{
+                        color: 'white',
+                    }}
+                    as={icon}
+                />
+            )}
+            {children}
+        </Flex>
+        // </Link>
     );
 };
 

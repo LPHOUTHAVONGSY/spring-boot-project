@@ -2,13 +2,25 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
+      "name": "lavong55-react",
+      "image": "lphouthavongsy1/lavong55-react:latest",
+      "essential": true,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 5173
+        }
+      ]
+    },
+    {
       "name": "lavong55-api",
       "image": "lphouthavongsy1/lavong55-api:08.08.2023.01.14.39",
       "essential": true,
       "memory": 512,
       "portMappings": [
         {
-          "hostPort": 80,
+          "hostPort": 8080,
           "containerPort": 8080
         }
       ],
