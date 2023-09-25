@@ -15,7 +15,7 @@
     },
     {
       "name": "lavong55-api",
-      "image": "lphouthavongsy1/lavong55-api:10.09.2023.02.32.41",
+      "image": "lphouthavongsy1/lavong55-api:25.09.2023.01.44.51",
       "essential": true,
       "memory": 512,
       "portMappings": [
