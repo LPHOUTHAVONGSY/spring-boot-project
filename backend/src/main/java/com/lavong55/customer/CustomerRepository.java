@@ -2,6 +2,7 @@ package com.lavong55.customer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
 //Annotation not needed.
 @Repository
@@ -13,6 +14,7 @@ public interface CustomerRepository
     //For below, you can auto generate SQL, and it's guaranteed to work.
     boolean existsCustomerByEmail(String email);
     boolean existsCustomerById(Long id);
+    Optional<Customer> findCustomerByEmail(String email);
 }
 
 /*

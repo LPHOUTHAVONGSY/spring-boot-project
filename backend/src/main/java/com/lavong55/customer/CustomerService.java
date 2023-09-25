@@ -4,26 +4,36 @@ import com.lavong55.exception.DuplicateResourceException;
 import com.lavong55.exception.RequestValidationException;
 import com.lavong55.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 //Contains "business" logic, i.e application logic.
 @Service
 public class CustomerService {
 
     private final CustomerDao customerDao;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomerDTOMapper customerDTOMapper;
 
-    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao, PasswordEncoder passwordEncoder, CustomerDTOMapper customerDTOMapper) {
         this.customerDao = customerDao;
+        this.passwordEncoder = passwordEncoder;
+        this.customerDTOMapper = customerDTOMapper;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customerDao.selectAllCustomers();
+    public List<CustomerDTO> getAllCustomers() {
+        return customerDao.selectAllCustomers()
+                .stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
     }
 
-    public Customer getCustomer(Long id) {
+    public CustomerDTO getCustomer(Long id) {
         return customerDao.selectCustomerById(id)
+                .map(customerDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "customer with id [%s] not found".formatted(id)
                 ));
@@ -42,6 +52,7 @@ public class CustomerService {
         Customer customer = new Customer(
                 customerRegistrationRequest.name(),
                 customerRegistrationRequest.email(),
+                passwordEncoder.encode(customerRegistrationRequest.password()),
                 customerRegistrationRequest.age(),
                 customerRegistrationRequest.gender()
         );
@@ -62,7 +73,10 @@ public class CustomerService {
     public void updateCustomer(Long customerId,
                                CustomerUpdateRequest updateRequest) {
         // TODO: for JPA use .getReferenceById(customerId) as it does does not bring object into memory and instead a reference
-        Customer customer = getCustomer(customerId);
+        Customer customer = customerDao.selectCustomerById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "customer with id [%s] not found".formatted(customerId)
+                ));
 
         boolean changes = false;
 

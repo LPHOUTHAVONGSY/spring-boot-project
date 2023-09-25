@@ -37,7 +37,7 @@ class CustomerRowMapperTest {
         // Then
         // Create the expected Customer object with the data we defined in the mock ResultSet
         Customer expected = new Customer(
-                1L, "John", "john@gmail.com", 19,
+                1L, "John", "john@gmail.com", "password", 19,
                 Gender.FEMALE);
 
         // Assert that the actual Customer object obtained from the mapRow method

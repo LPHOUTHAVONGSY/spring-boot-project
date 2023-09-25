@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,15 +24,17 @@ class CustomerServiceTest {
     // Create a mock instance of CustomerDao to simulate the behavior of a database.
     @Mock
     private CustomerDao customerDao;
-
+    @Mock
+    private PasswordEncoder passwordEncoder;
     // The class under test - CustomerService.
     private CustomerService underTest;
+    private final CustomerDTOMapper customerDTOMapper = new CustomerDTOMapper();
 
     // This setup method is executed before each test case.
     @BeforeEach
     void setUp() {
         // Initialize the CustomerService instance with the mock CustomerDao.
-        underTest = new CustomerService(customerDao);
+        underTest = new CustomerService(customerDao, passwordEncoder, customerDTOMapper);
     }
 
     // This cleanup method is executed after each test case. Nothing to clean up in this example.
@@ -56,16 +59,17 @@ class CustomerServiceTest {
         // Given a customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
+        CustomerDTO expected = customerDTOMapper.apply(customer);
         // When calling getCustomer with the given ID.
-        Customer actual = underTest.getCustomer(id);
+        CustomerDTO actual = underTest.getCustomer(id);
 
         // Then verify that the returned customer is the same as the mock Customer.
-        assertThat(actual).isEqualTo(customer);
+        assertThat(actual).isEqualTo(expected);
     }
 
     // Test method to verify if getCustomer throws ResourceNotFoundException when the ID does not exist.
@@ -90,8 +94,11 @@ class CustomerServiceTest {
         // When checking if email exists, return false (email does not exist in the database).
         when(customerDao.existsCustomerWithEmail(email)).thenReturn(false);
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19, Gender.MALE
+                "Alex", email, "password", 19, Gender.MALE
         );
+
+        String passwordHash = "78yd87ewddewq";
+        when(passwordEncoder.encode(request.password())).thenReturn(passwordHash);
 
         // When calling addCustomer with the request.
         underTest.addCustomer(request);
@@ -106,6 +113,7 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(request.name()); // Verify that the captured customer's name matches the request's name.
         assertThat(capturedCustomer.getEmail()).isEqualTo(request.email()); // Verify that the captured customer's email matches the request's email.
         assertThat(capturedCustomer.getAge()).isEqualTo(request.age()); // Verify that the captured customer's age matches the request's age.
+        assertThat(capturedCustomer.getPassword()).isEqualTo(passwordHash);
     }
 
     // Test method to verify if addCustomer throws DuplicateResourceException when the email is already taken.
@@ -117,7 +125,7 @@ class CustomerServiceTest {
         when(customerDao.existsCustomerWithEmail(email)).thenReturn(true);
         
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19, Gender.MALE
+                "Alex", email, "password", 19, Gender.MALE
         );
 
         // Then verify that calling addCustomer with the request throws a DuplicateResourceException.
@@ -167,7 +175,7 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
@@ -200,7 +208,7 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
@@ -230,7 +238,7 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
@@ -263,7 +271,7 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
@@ -293,7 +301,7 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
@@ -321,7 +329,7 @@ class CustomerServiceTest {
         // Given an existing customer ID and a mock Customer object.
         long id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         // When customerDao.selectCustomerById(id) is called, return the mock Customer.
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
