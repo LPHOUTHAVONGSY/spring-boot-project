@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "lavong55-react",
-      "image": "lphouthavongsy1/lavong55-react:10.09.2023.02.16.18",
+      "image": "lphouthavongsy1/lavong55-react:15.10.2023.20.15.03",
       "essential": true,
       "memory": 256,
       "portMappings": [
