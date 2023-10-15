@@ -48,7 +48,7 @@ public class JWTUtil {
                 .setIssuedAt(Date.from(Instant.now())) // Set the token's issuance date
                 .setExpiration(
                         Date.from(
-                                Instant.now().plus(15, DAYS) // Set the token's expiration date (15 days from now)
+                                Instant.now().plus(1, DAYS) // Set the token's expiration date (15 days from now)
                         )
                 )
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256) // Sign the token with the HMAC-SHA256 algorithm
