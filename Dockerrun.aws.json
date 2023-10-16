@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "lavong55-api",
-      "image": "lphouthavongsy1/lavong55-api:15.10.2023.19.57.30",
+      "image": "lphouthavongsy1/lavong55-api:16.10.2023.03.18.47",
       "essential": true,
       "memory": 512,
       "portMappings": [
