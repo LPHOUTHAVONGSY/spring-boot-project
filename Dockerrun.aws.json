@@ -2,32 +2,20 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "lavong55-react",
-      "image": "lphouthavongsy1/lavong55-react:15.10.2023.20.15.03",
-      "essential": true,
-      "memory": 256,
-      "portMappings": [
-        {
-          "hostPort": 80,
-          "containerPort": 5173
-        }
-      ]
-    },
-    {
       "name": "lavong55-api",
       "image": "lphouthavongsy1/lavong55-api:15.10.2023.19.57.30",
       "essential": true,
       "memory": 512,
       "portMappings": [
         {
-          "hostPort": 8080,
+          "hostPort": 80,
           "containerPort": 8080
         }
       ],
       "environment": [
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://awseb-e-tuswsyzd3h-stack-awsebrdsdatabase-yfmq7aaacm5m.cx6kl1hb1m0m.ca-central-1.rds.amazonaws.com:5432/customer"
+          "value": "awseb-e-vqw8gnwamn-stack-awsebrdsdatabase-mwebhxlfynub.cx6kl1hb1m0m.ca-central-1.rds.amazonaws.com:5432/ebdb"
         }
       ]
     }
